@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WezeParking {
-    private Car carsIn[] = new Car[10];
+    private Car carsIn[] = new Car[2];
+    
+    private int carCount = 0;
     
     private ArrayList<Car> carsOut = new ArrayList<Car>();
     
@@ -40,10 +42,25 @@ public class WezeParking {
             // Validate user option
             switch(op) {
                 case '1':
-                    System.out.println("You have selected the first option.");
+                    // Check that the parking lot is not full
+                    if (carCount == carsIn.length) {
+                        System.out.println("Parking lot full.");
+        
+                    }else {
+                        String plate = requestPlate(false);
+                   
+                        addCarIn(plate);
+                    } 
                     break;
                 case '2':
-                    System.out.println("You have selected the second option.");
+                    // checking if the parking lot has cars
+                    if(carCount == 0) {
+                        System.out.println("Parking lot empty.");
+                    } else {
+                        String plate = requestPlate(true);
+                    
+                        removeCarIn(plate);
+                    }
                     break;
                 case '3':
                     System.out.println("You have selected the third option.");
@@ -56,5 +73,105 @@ public class WezeParking {
             }
             
         } while(op == '1' || op == '2' || op == '3' || op == '4');
+    }
+     
+    private String requestPlate(boolean removing) { 
+        Scanner sc = new Scanner(System.in);
+                
+        // Booleans used to check that the input is the right
+        boolean plateExists = false;
+                
+        boolean isNumber = false;
+		
+        boolean isThreeDigits = false;
+		
+        String plate = "";
+               
+        // Getting input and checking every condition
+        do {
+            System.out.println("");
+        
+            System.out.println("Please enter the plate of the car");
+        
+            plate = sc.nextLine();
+        
+            isNumber = isNumber(plate);
+        
+            isThreeDigits = isThreeDigits(plate);
+            
+            // This will help us to avoind repeating the reading of the input in case that we want to remove the car
+            if(removing) {
+                plateExists = false;
+            } else {
+                plateExists = plateExists(plate);
+            }	
+        } while (!isNumber || !isThreeDigits || plateExists);
+        
+        return plate;
+     }
+	
+    private boolean isNumber(String plate) {	
+        try {
+            Integer.parseInt(plate);
+		
+            return true;
+        } catch (NumberFormatException e) {		
+            return false;	
+        }
+	
+    }
+	
+    private boolean isThreeDigits(String plate) {
+        if (plate.length() == 3) {
+            return true;	
+        } else {
+            return false;	
+        }	
+    }
+	
+    private boolean plateExists(String plate) {
+        for (int i = 0; i < carsIn.length; i++) {		
+            if (carsIn[i] != null) { // If the position has a car
+                if (carsIn[i].getPlate().equals(plate)) {
+                    return true;
+                }		
+            }	
+        }	
+        
+        return false;	
+    }
+    
+    private void addCarIn(String plate) {
+        Car car = new Car(plate);
+        
+        carsIn[carCount] = car;
+            
+        carCount++;
+            
+        System.out.println("The car with plate " + car.getPlate() + " has been successfully added");
+    }
+    
+    private void removeCarIn(String plate) {
+        for (int i = 0; i < carsIn.length; i++) {
+            if (carsIn[i].getPlate().equals(plate)) {          
+                for (int j = i; j < carsIn.length - 1; j++) {
+                    carsIn[j] = carsIn[j + 1];
+                }
+                
+                carsIn[carsIn.length - 1] = null;
+                
+                carCount--;
+                
+                break;
+            }
+        }
+        
+        addCarOut(plate);
+    }
+    
+    private void addCarOut(String plate) {
+        Car car = new Car(plate);
+        
+        carsOut.add(car);
     }
 }
