@@ -2,6 +2,7 @@
 package vectorworkshop;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class WezeParking {
@@ -12,6 +13,8 @@ public class WezeParking {
     private ArrayList<Car> carsOut = new ArrayList<Car>();
     
     private ArrayList<Ticket> tickets = new ArrayList<Ticket>();
+    
+    Random random = new Random();
     
     WezeParking(){}
     
@@ -68,7 +71,9 @@ public class WezeParking {
                     }
                     break;
                 case '3':
-                    System.out.println("You have selected the third option.");
+                    createTicket();
+                    
+                    System.out.println("Ticket " + tickets.get(tickets.size() - 1).getNumber() + " created successfully");
                     break;
                 case '4': 
                     System.out.println("You have selected the fouth option.");
@@ -127,20 +132,17 @@ public class WezeParking {
     }
 	
     private boolean isThreeDigits(String plate) {
-        if (plate.length() == 3) {
-            return true;	
-        } else {
-            return false;	
-        }	
+        return plate.length() == 3;	
     }
 	
     private boolean plateExists(String plate) {
-        for (int i = 0; i < carsIn.length; i++) {		
-            if (carsIn[i] != null) { // If the position has a car
-                if (carsIn[i].getPlate().equals(plate)) {
+        for (Car carsIn1 : carsIn) {
+            if (carsIn1 != null) {
+                // If the position has a car
+                if (carsIn1.getPlate().equals(plate)) {
                     return true;
-                }		
-            }	
+                }
+            }
         }	
         
         return false;	
@@ -182,5 +184,17 @@ public class WezeParking {
         Car car = new Car(plate);
         
         carsOut.add(car);
+    }
+    
+    private void createTicket() {
+        long number = random.nextInt(1000000) + 1;
+        
+        Ticket ticket = new Ticket(number);
+        
+        if (tickets.contains(ticket)) {
+            createTicket();
+        } else {
+            tickets.add(ticket);
+        }
     }
 }

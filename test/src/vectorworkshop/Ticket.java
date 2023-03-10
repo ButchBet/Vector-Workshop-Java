@@ -3,7 +3,7 @@ package vectorworkshop;
 public class Ticket {
     long number;
     
-    Ticket(int number) {
+    Ticket(long number) {
         this.number = number;
     }
     
