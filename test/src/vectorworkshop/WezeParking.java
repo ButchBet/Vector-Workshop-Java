@@ -76,7 +76,9 @@ public class WezeParking {
                     System.out.println("Ticket " + tickets.get(tickets.size() - 1).getNumber() + " created successfully");
                     break;
                 case '4': 
-                    System.out.println("You have selected the fouth option.");
+                    System.out.println("The quantity of tickets is: " + tickets.size());
+                    
+                    System.out.println("The quantity of cars out is: " + carsOut.size());
                     break;
                 default:
                     System.out.println("Getting back...");
