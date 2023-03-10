@@ -58,8 +58,13 @@ public class WezeParking {
                         System.out.println("Parking lot empty.");
                     } else {
                         String plate = requestPlate(true);
-                    
-                        removeCarIn(plate);
+                        
+                        if(plateExists(plate)) {                                             
+                            removeCarIn(plate);
+                        } else {
+                            System.out.println("The car with plate " + plate + " was not found in the system.");
+                        }
+                        
                     }
                     break;
                 case '3':
@@ -91,7 +96,7 @@ public class WezeParking {
         do {
             System.out.println("");
         
-            System.out.println("Please enter the plate of the car");
+            System.out.println("Please enter the plate of the car.");
         
             plate = sc.nextLine();
         
@@ -148,21 +153,25 @@ public class WezeParking {
             
         carCount++;
             
-        System.out.println("The car with plate " + car.getPlate() + " has been successfully added");
+        System.out.println("The car with plate " + car.getPlate() + " has been successfully added.");
     }
     
     private void removeCarIn(String plate) {
         for (int i = 0; i < carsIn.length; i++) {
-            if (carsIn[i].getPlate().equals(plate)) {          
-                for (int j = i; j < carsIn.length - 1; j++) {
-                    carsIn[j] = carsIn[j + 1];
-                }
+            if (carsIn[i] != null) { // If the position has a car
+                if (carsIn[i].getPlate().equals(plate)) {          
+                    for (int j = i; j < carsIn.length - 1; j++) {
+                        carsIn[j] = carsIn[j + 1];
+                    }
                 
                 carsIn[carsIn.length - 1] = null;
                 
-                carCount--;
+                carCount--; 
+                
+                    System.out.println("Car with plate " + plate + " successfully removed.");
                 
                 break;
+                }
             }
         }
         
