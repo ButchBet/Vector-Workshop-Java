@@ -4,11 +4,12 @@ import java.util.Scanner;
 
 public class VectorWorkshop {
     private static WezeParking parkingLot = new WezeParking();
-
+    private static VectorsManipulation vectorsManipulation = new VectorsManipulation();
+    
     public static void main(String[] args) {     
-        char op = 'a';
-        
         Scanner cmd = new Scanner(System.in);
+        
+        char op = 'a';
         
         do {
             System.out.println("");
@@ -34,10 +35,10 @@ public class VectorWorkshop {
                        parkingLot.main();
                     break;
                 case '2':
-                    System.out.println("You have selected the second option.");
+                    vectorsManipulation.main(true);
                     break;
                 case '3':
-                    System.out.println("You have selected the third option.");
+                    vectorsManipulation.main(false);
                     break;
                 default:
                     System.out.println("Exiting...");

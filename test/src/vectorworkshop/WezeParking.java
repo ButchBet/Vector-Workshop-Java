@@ -16,23 +16,28 @@ public class WezeParking {
     
     Random random = new Random();
     
+    Scanner cmd = new Scanner(System.in);
+    
     WezeParking(){}
     
      public void main () {
         char op;
-        
-        Scanner cmd = new Scanner(System.in);
         
         do {      
             System.out.println("");
             
             // Show possible options
             System.out.println("What do you want to do?.");
+            
             System.out.println("1: Add car in the parking lot.");
+            
             System.out.println("2. Remove car from the parking lot.");
+            
             System.out.println("3. Create cinema ticket");
+            
             System.out.println("4. Show number of tickes and cars out of the parking lot.");
-            System.out.println("Other. Get to main menu.");
+            
+            System.out.println("Other. Go to main menu.");
             
             String proveOp = cmd.nextLine();
             
